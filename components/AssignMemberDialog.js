@@ -17,9 +17,9 @@ import Checkbox from '@material-ui/core/Checkbox';
 export default class AssignMemberDialog extends React.Component {
 
   state = {
-    members:[]
+    members:[],
+    chosenMembers:[]
   }
-
 
   componentDidUpdate(prevProps){
     if ((this.props.open === true) && (prevProps.open === false) ){
@@ -35,7 +35,6 @@ export default class AssignMemberDialog extends React.Component {
               members: response.data , 
               chosenMembers: Array(response.data.length).fill(false) 
             });
-          console.log(members);
         } 
        )
        .catch(err=> console.log(err));
@@ -52,7 +51,18 @@ export default class AssignMemberDialog extends React.Component {
   }
 
   assignMember = function(){
-
+    let assignMemberId = [];
+    for (var i=0; i < this.state.chosenMembers.length; i++){
+      if (this.state.chosenMembers[i]){
+        assignMemberId.push(this.state.members[i].id);
+      }        
+    }
+    axios.post("http://localhost:7900/api//assigned-member-to-project",{
+      projectId: this.props.projectId,
+      memberIds: assignMemberId
+    })
+    .then(()=> this.props.handleClose())
+    .catch();
   }
 
   render() {
@@ -89,7 +99,7 @@ export default class AssignMemberDialog extends React.Component {
           <Button onClick={this.props.handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={this.props.handleClose} color="primary">
+          <Button onClick={()=>this.assignMember()} color="primary">
             Add Member
           </Button>
         </DialogActions>
