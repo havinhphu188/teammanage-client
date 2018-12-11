@@ -33,13 +33,12 @@ export default class AssignMemberDialog extends React.Component {
           this.setState(
             { 
               members: response.data , 
-              chosenMembers: Array(response.data.length).fill(false) 
+              chosenMembers: Array(response.data.length).fill(false) // chosen state
             });
         } 
        )
        .catch(err=> console.log(err));
     }
-   
   }
 
   // when click on check box , change state of chosen member This dialog, check box is managed in state 
@@ -58,12 +57,7 @@ export default class AssignMemberDialog extends React.Component {
         assignMemberId.push(this.state.members[i].id);
       }        
     }
-    axios.post("http://localhost:7900/api//assigned-member-to-project",{
-      projectId: this.props.projectId,
-      memberIds: assignMemberId
-    })
-    .then(()=> this.props.handleClose())
-    .catch();
+    this.props.assignMember(assignMemberId);
   }
 
   render() {
@@ -74,13 +68,6 @@ export default class AssignMemberDialog extends React.Component {
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">Assign New Member</DialogTitle>
-        {/* <DialogContent> */}
-        {/* {this.state.members.map(n => {
-              return (
-                n.member_name
-              );
-            })} */}
-        {
           <List dense >
           {this.state.members.map((member,index) => (
             <ListItem key={member.id}>
@@ -94,10 +81,8 @@ export default class AssignMemberDialog extends React.Component {
             </ListItem>
           ))}
         </List>
-        }      
-        {/* </DialogContent> */}
         <DialogActions>
-          <Button onClick={this.props.handleClose} color="primary">
+          <Button onClick={()=>this.props.handleClose()} color="primary">
             Cancel
           </Button>
           <Button onClick={()=>this.assignMember()} color="primary">
