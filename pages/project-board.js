@@ -36,6 +36,49 @@ class Projectboard extends React.Component {
     };
   }
 
+  // removeMember = function(memberId) {
+  //   axios
+  //     .post(`http://localhost:7900/api/remove-assigned-member`, {
+  //       projectId: this.props.id,
+  //       memberId: memberId
+  //     })
+  //     .then(function(response) {
+  //       return axios.get(`http://localhost:7900/api/get-assigned-member`, {
+  //         params: {
+  //           id:  this.props.id
+  //         }
+  //       });
+  //     })
+  //     .then(res => {
+  //       this.setState({
+  //         members: res.data
+  //       });
+  //     })
+  //     .catch(function(error) {
+  //       console.log(error);
+  //     });
+  // };
+
+  removeMember = async function(memberId) {
+      await axios.post(`http://localhost:7900/api/remove-assigned-member`, {
+        projectId: this.props.id,
+        memberId: memberId
+      })
+      
+      let res = await axios.get(`http://localhost:7900/api/get-assigned-member`, {
+          params: {
+            id:  this.props.id
+          }
+        });
+    
+      
+        this.setState({
+          members: res.data
+        });
+      
+      
+  };
+
   handleClickOpen = () => {
     this.setState({ open: true });
   };
@@ -55,8 +98,8 @@ class Projectboard extends React.Component {
             {this.props.projectInfo.project_desc}
           </Typography>
           <AssignedMemberTable
-            assignedMember={this.props.members}
-            projectId={this.state.id}
+            assignedMember={this.state.members}
+            onClick={(memberId)=> this.removeMember(memberId)}
           />
           <Button
             variant="contained"

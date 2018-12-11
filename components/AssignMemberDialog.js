@@ -42,6 +42,7 @@ export default class AssignMemberDialog extends React.Component {
    
   }
 
+  // when click on check box , change state of chosen member This dialog, check box is managed in state 
   handleToggle = function(id){
     let newChosenList = this.state.chosenMembers;
     newChosenList[id] = !newChosenList[id];

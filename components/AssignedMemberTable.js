@@ -21,33 +21,8 @@ const styles = {
 };
 
 class AssignedMemberTable extends React.Component {
-  removeMember = function(memberId) {
-    const projectId = this.props.projectId;
-    axios
-      .post(`http://localhost:7900/api/remove-assigned-member`, {
-        projectId: this.props.projectId,
-        memberId: memberId
-      })
-      .then(function(response) {
-        return axios.get(`http://localhost:7900/api/get-assigned-member`, {
-          params: {
-            id: projectId
-          }
-        });
-      })
-      .then(members => {
-        this.setState({
-          members: members.data
-        });
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-  };
+  
 
-  state = {
-    members: this.props.assignedMember
-  };
 
   render() {
     const { classes } = this.props;
@@ -63,7 +38,7 @@ class AssignedMemberTable extends React.Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            {this.state.members.map(n => {
+            {this.props.assignedMember.map(n => {
               return (
                 <TableRow key={n.id}>
                   <TableCell numeric component="th" scope="row">
@@ -75,7 +50,7 @@ class AssignedMemberTable extends React.Component {
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={() => this.removeMember(n.id)}
+                      onClick={() => this.props.onClick(n.id)}
                     >
                       Remove
                     </Button>
