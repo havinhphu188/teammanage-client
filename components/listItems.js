@@ -30,14 +30,5 @@ export const mainListItems = (
         <ListItemText primary="Members" />
       </ListItem>
     </Link>
-
-    <Link href="/create-project">
-      <ListItem button>
-        <ListItemIcon>
-          <LayersIcon />
-        </ListItemIcon>
-        <ListItemText primary="Projects" />
-      </ListItem>
-    </Link>
   </div>
 );

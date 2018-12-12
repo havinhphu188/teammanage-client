@@ -16,23 +16,7 @@ export default class AddProjectDialog extends React.Component {
     this.setState({
       [name]: event.target.value,
     });
-    };
-    
-  addProject = () => {
-    const axios = require("axios");
-    axios
-      .post("http://localhost:7900/api/create-project", {
-        project_name: this.state.name,
-        project_desc: this.state.description
-      })
-      .then(function(response) {
-        console.log(response);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-    this.props.handleClose();
-  };
+    };  
 
   render() {
     return (
@@ -67,7 +51,7 @@ export default class AddProjectDialog extends React.Component {
           <Button onClick={this.props.handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={this.addProject} color="primary">
+          <Button onClick={() => this.props.handleAddProject(this.state.name, this.state.description)} color="primary">
             Add Project
           </Button>
         </DialogActions>

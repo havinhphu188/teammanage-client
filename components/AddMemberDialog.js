@@ -17,21 +17,7 @@ export default class AddMemberDialog extends React.Component {
       [name]: event.target.value,
     });
     };
-  addMember = () => {
-    const axios = require("axios");
-    axios
-      .post("http://localhost:7900/api/create-member", {
-        member_name: this.state.name,
-        member_email: this.state.email
-      })
-      .then(function(response) {
-        console.log(response);
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
-    this.props.handleClose();
-  };
+  
 
   render() {
     return (
@@ -66,7 +52,7 @@ export default class AddMemberDialog extends React.Component {
           <Button onClick={this.props.handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={this.addMember} color="primary">
+          <Button onClick={()=>this.props.addMember(this.state.name, this.state.email)} color="primary">
             Add Member
           </Button>
         </DialogActions>
