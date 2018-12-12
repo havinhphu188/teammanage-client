@@ -15,5 +15,4 @@ yarn-debug.log*
 yarn-error.log*
 
 # Next.js
-/.next
 /.idea
